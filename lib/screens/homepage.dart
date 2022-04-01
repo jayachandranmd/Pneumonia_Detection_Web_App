@@ -17,15 +17,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List? _classifiedResult;
-  var pickedImage;
-  Future<void> _getImage() async {
-    Uint8List? bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
-    if (bytesFromPicker != null) {
+  var pickedImage1;
+  var pickedImage2;
+  Future<void> _getImage1() async {
+    Uint8List? bytesFromPicker1 = await ImagePickerWeb.getImageAsBytes();
+    if (bytesFromPicker1 != null) {
       setState(() {
-        pickedImage = bytesFromPicker;
+        pickedImage1 = bytesFromPicker1;
       });
     }
-    classifyImage(pickedImage);
+    classifyImage(pickedImage1);
+  }
+
+  Future<void> _getImage2() async {
+    Uint8List? bytesFromPicker2 = await ImagePickerWeb.getImageAsBytes();
+    if (bytesFromPicker2 != null) {
+      setState(() {
+        pickedImage2 = bytesFromPicker2;
+      });
+    }
+    classifyImage(pickedImage2);
   }
 
   Future loadModel() async {
@@ -57,7 +68,7 @@ class _HomePageState extends State<HomePage> {
     print("classification done");
     setState(() {
       if (image != null) {
-        pickedImage = File(image);
+        pickedImage1 = File(image);
         _classifiedResult = result;
       } else {
         print('No image selected.');
@@ -336,8 +347,8 @@ class _HomePageState extends State<HomePage> {
             sBoxH30,
             Padding(
               padding: hpad30,
-              child: (pickedImage != null)
-                  ? Center(child: Image.memory(pickedImage))
+              child: (pickedImage1 != null)
+                  ? Center(child: Image.memory(pickedImage1))
                   : DottedBorder(
                       dashPattern: const [8, 8],
                       strokeWidth: 2,
@@ -363,7 +374,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             sBoxH20,
                             InkWell(
-                              onTap: _getImage,
+                              onTap: _getImage1,
                               child: Container(
                                 width: 129,
                                 height: 39,
@@ -854,8 +865,8 @@ class _HomePageState extends State<HomePage> {
             sBoxH30,
             Padding(
               padding: hpad30,
-              child: (pickedImage != null)
-                  ? Center(child: Image.memory(pickedImage))
+              child: (pickedImage2 != null)
+                  ? Center(child: Image.memory(pickedImage2))
                   : DottedBorder(
                       dashPattern: const [8, 8],
                       strokeWidth: 2,
@@ -881,7 +892,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             sBoxH20,
                             InkWell(
-                              onTap: _getImage,
+                              onTap: _getImage2,
                               child: Container(
                                 width: 129,
                                 height: 39,
